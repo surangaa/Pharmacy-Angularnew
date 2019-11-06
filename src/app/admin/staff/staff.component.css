@@ -1,0 +1,14 @@
+.card{
+    border: 25px;
+    border-color: rgb(44, 40, 40);
+    padding-bottom: 20px;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+.userForm {
+  border-radius: 10px;
+  padding: 25px;
+}

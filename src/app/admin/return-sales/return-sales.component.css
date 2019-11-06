@@ -1,0 +1,26 @@
+.transactionForm {
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.item-list {
+  border-radius: 10px;
+  border: 1px solid rgb(156, 156, 156);
+  padding: 25px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+  
+select.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.ng-select {
+  padding-top: 10px;
+}

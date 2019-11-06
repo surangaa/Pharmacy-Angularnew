@@ -1,0 +1,61 @@
+<h1 class="d-inline-block">Generic</h1>
+<hr>
+<div>
+  <div class="container-fluid">
+    <form (ngSubmit)="onSubmit()" #f="ngForm" class="genericForm formNeedsBackground">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" ngModel name="genericName" required #genericName="ngModel"
+            [ngClass]="{'is-invalid': genericName.invalid  && (genericName.dirty || genericName.touched) }">
+          <span class="invalid-feedback">
+            <span *ngIf="genericForm.hasError('required','genericName')">
+              Generic name is required.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="row mt-3 ml-2">
+        <div class="col">
+          <div class="float-right">
+            <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonValue }}</button>
+            <button type="reset" class="btn btn-info mr-2" (click)="resetGenericForm()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div class="container">
+      <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+        <table #genericsTable class="display table table-hover table-bordered borderless" style="width:100%">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let generic of generics; let i =index;">
+              <td>{{i + 1}}</td>
+              <td>{{generic.name}}</td>
+              <td>
+                <button type="button" class="btn btn-primary mr-2" (click)="updateGeneric(generic.id)"><i
+                    class="far fa-edit"></i></button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger mr-2" (click)="deleteGeneric(generic)"><i
+                    class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

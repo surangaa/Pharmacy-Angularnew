@@ -1,0 +1,65 @@
+.card{
+    width: 350px;
+    height: 350px;
+    justify-content: center;
+    margin-left: 780px;
+    margin-right: 200px;
+    opacity: 0.9;
+    background-color: rgba(8, 92, 131, 0.377);
+    top: 30px;
+  
+  
+}
+
+.center{
+  margin-top: 5px;
+  text-align: center;
+  font-size: 60px;
+  color: rgb(6, 72, 92);
+
+}
+
+.center1{
+  margin-top: 5px;
+  text-align: center;
+  font-size: 30px;
+  color: rgb(9, 119, 153);
+
+}
+
+.text1{
+  font-size:18px;
+  color: rgb(19, 20, 20);
+}
+   
+   .background {
+   width: 100%;
+   height: 100vh;
+   background: url('/assets/prescription1.jpg') no-repeat;
+   /* background-color: rgb(17, 109, 151); */
+   background-size: cover;
+   /* color: white; */
+   /* text-align: center; */
+}
+
+.ng-invalid:not(Form) {
+  border-left:5px solid red;
+}
+
+.ng-valid:not(Form){
+  border-left: 5px solid green;
+}
+
+/* .body{
+  background-color: rgb(53, 163, 127);
+  /* background-image: url("D:\PharmacyAngular\src\assets\wp1931605.jpg"); 
+} */
+
+/* .body
+{
+    background-image: url('D:/PharmacyAngular/src/assets/wp1931605.jpg');
+    background-position: center;
+    background-repeat: no-repeat; 
+} */
+
+

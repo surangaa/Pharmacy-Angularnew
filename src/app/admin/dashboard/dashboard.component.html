@@ -1,0 +1,187 @@
+<h1 class="d-inline-block">Dashboard</h1>
+<hr>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <main class="main">
+        <div class="container-fluid">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-primary o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fas fa-money-bill-wave-alt"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h2>Rs. {{ todaySales | number : '1.2-2' }}</h2>
+                                    <h5>Sales Today</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-success o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fas fa-cash-register"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h2>{{ todayTransaction }}</h2>
+                                    <h5>Transactions Today</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-primary o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fas fa-money-bill-wave-alt"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h2>Rs. {{ monthSales | number : '1.2-2' }}</h2>
+                                    <h5>Sales This Month</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-success o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fas fa-cash-register"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h2>{{ monthTransacrion }}</h2>
+                                    <h5>Transactions This Month </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <div>
+                    <br>
+                    <div class="row">
+                        <div class="col-8 text-center">
+                            <h3 class="mb-0">Total Sales And Discounts</h3>
+                            <p>(From past 7 days data)</p>
+                            <div *ngIf="chartReady">
+                                <div class="container">
+                                    <canvas baseChart [datasets]="chartData" [labels]="chartLabels"
+                                        [options]="chartOptions" [legend]="chartLegend" [chartType]="chartType">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h3 class="mb-0">Top 10 Items Sold</h3>
+                            <p>(From past 7 days data)</p>
+                            <div *ngIf="chartReady" style="display: block;">
+                                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+                                    [chartType]="pieChartType"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col text-center">
+                <div class="container">
+                    <h3>Transaction details</h3>
+                    <p>(Last 5)</p>
+                    <table class="table table-bordered table-responsive-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Discount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let transaction of transactions | slice:0:5; let i =index;">
+                                <td>{{ transaction.created_at | date }}</td>
+                                <td>Rs. {{ transaction.grand_total }}</td>
+                                <td>Rs. {{ transaction.discount_price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="container">
+                    <h3>Purchase details</h3>
+                    <p>(Last 5)</p>
+                    <table class="table table-bordered table-responsive-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Invoice number</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let purchase of purchases | slice:0:5; let i =index;">
+                                <td>{{ purchase.created_at | date }}</td>
+                                <td>{{ purchase.supplierInvoiceNo }}</td>
+                                <td>Rs. {{purchase.total}}</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <div class="container">
+                    <h3>Low stock of drugs</h3>
+                    <p>(up to today)</p>
+                    <table class="table table-bordered table-responsive-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Supplier</th>
+                                <th>Quantity left</th>
+                                <th>Expiry Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let lowstock of lowstocks; let i =index;">
+                                <td>{{ lowstock.Name }}</td>
+                                <td>{{ lowstock.supplier}}</td>
+                                <td> {{ lowstock.units_left}}</td>
+                                <td> {{ lowstock.expiryDate }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        <!-- /.row-->
+        <!-- </div>
+        </div> -->
+        <!-- <aside class="aside-menu">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">
+                        <i class="icon-list"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
+                        <i class="icon-speech"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
+                        <i class="icon-settings"></i>
+                    </a>
+                </li>
+            </ul>
+        </aside> -->

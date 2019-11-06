@@ -1,0 +1,8 @@
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+.categoryForm {
+  border-radius: 10px;
+  padding: 25px;
+}

@@ -1,0 +1,79 @@
+<h1 class="d-inline-block">Employee performance Report</h1>
+<hr>
+<div>
+  <div class="container">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="salesForm formNeedsBackground">
+      <div class="row mt-2">
+        <div class="col-4">
+          <label for="startdate">Start Date</label>
+        </div>
+        <div class="col-8">
+          <input type="date" id="startdate" class="form-control" name="startdate" [ngModel] required
+            max="{{ performanceForm.value.enddate }}">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-4">
+          <label for="enddate">End Date</label>
+        </div>
+        <div class="col-8">
+          <input type="date" id="enddate" class="form-control" name="enddate" [ngModel] required
+            min="{{ performanceForm.value.startdate }}">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <div class="float-right">
+            <button class="btn btn-primary mr-2" type="submit" [disabled]=!f.valid>Get
+              Report</button>
+            <button class="btn btn-primary mr-2" type="button" (click)="resetPerformanceForm()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <br>
+  <br>
+  <hr>
+
+  <button class="btn btn-info mt-3 float-right" (click)="genaratePDF()">Print Report</button>
+
+  <div id="contentToConvert" class="container" style="margin-top: 85px">
+    <div class="center">
+      <h1>Weerasiri Pharmacy</h1>
+      <h6>Employee performance Report</h6>
+      <p>33/A,Kirillawala,Kadawatha T.P:0112345672</p>
+    </div>
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+      <table #salesTable class="display table table-hover table-bordered borderless" style="width:100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Staff Name</th>
+            <th>Transaction Count</th>
+            <th>Transaction Sum</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let performance of performances; let i =index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ performance.Name }}</td>
+            <td>{{ performance.transaction_count }}</td>
+            <td>{{ performance.transaction_sum }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="chartReady"> -->
+<div class="container">
+  <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="chartLegend"
+    [chartType]="chartType">
+  </canvas>
+</div>
+<!-- </div> -->

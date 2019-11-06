@@ -1,0 +1,34 @@
+<h1 class="d-inline-block">Stock details</h1>
+<br>
+<div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+  <table #stockTable class="display table table-hover table-bordered borderless" style="width:100%">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Item Name</th>
+        <th>Product Code</th>
+        <th>Expiry date</th>
+        <th>BatchID</th>
+        <th>Supplier</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of stocks; let i =index;">
+        <td>{{i + 1}}</td>
+        <td>{{stock.Name}}</td>
+        <td>{{stock.code}}</td>
+        <td>{{stock.expiryDate}}</td>
+        <td>{{stock.batchId}}</td>
+        <td>{{stock.supplier}}</td>
+        
+
+       
+        <td>
+          <button type="button" class="btn btn-danger mr-2" (click)="deleteStock(stock)"><i
+              class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,137 @@
+<h1 class="d-inline-block">Transactions</h1>
+<hr>
+<div class="container-fluid">
+    <div id="content" #content class="transactionForm formNeedsBackground">
+        <form [formGroup]="nestedForm">
+            <h4>Item Details</h4>
+            <div class="row mb-2">
+                <div class="col">
+                    <button type="submit" class="btn btn-success float-right" [disabled]="nestedForm.invalid"
+                        (click)="addItem()">Add Item</button>
+                </div>
+
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <label for="itemId">Item</label>
+                        <ng-select bindLabel="Name" placeholder="Select Item" formControlName="itemId">
+                            <ng-option *ngFor="let itemstock of itemstocks" [value]="itemstock.id">
+                                {{itemstock.code}}-{{itemstock.Name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="col">
+                        <label for="quantity">Quantity</label>
+                        <input formControlName="quantity" type="text" class="form-control mt-2" id="quantity">
+                    </div>
+                </div>
+            </div>
+        </form>
+            <br>
+            <div *ngIf="selectedItems.length > 0">
+                <div class="mt-4">
+                    <div class="row">
+                        <div class="col">
+                            <label for="discount">Discount</label>
+                            <input type="text" class="form-control mt-2" id="discount" [(ngModel)]="currentDiscount">
+                        </div>
+                        <div class="col">
+                            <label for="amount_paid">Amount Paid</label>
+                            <input type="text" class="form-control mt-2" id="amount_paid" [(ngModel)]="currentPaid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div id="contentToConvert" class="container" style="margin-top: 85px">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12" *ngIf="selectedItems.length > 0">
+                    <table class="display table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let selectedItem of selectedItems; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ getItemName(selectedItem.itemId) }}</td>
+                                <td>{{ selectedItem.quantity }}</td>
+                                <td>Rs. {{ getItemPrice(selectedItem.itemId, selectedItem.quantity) | number:'1.2-2'}}</td>
+                                <td><button type="button" class="btn mr-2"
+                                        (click)="deleteFromSelectedItem(i)"><i
+                                        class="fas fa-minus-circle"></i></button></td>
+                            </tr>
+                            <tr *ngIf="getTotalPrice() > 0">
+                                <!-- <td></td> -->
+                                <!-- <td></td> -->
+                                <td><strong>Total</strong></td>
+                                <td><strong>Rs. {{ getTotalPrice() | number : '1.2-2' }}</strong></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            
+        
+        <hr>
+      
+            <br>
+            <!-- <div id="contentToConvert1" class="container" style="margin-top: 85px"> -->
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12" *ngIf="selectedItems.length > 0">
+                    <table class="display table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Discount Amount</th>
+                                <th>Grand Total</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td>Rs. {{getDiscountAmount() | number : '1.2-2' }}</td>
+                            <td>Rs. {{getGrandTotal() | number : '1.2-2' }}</td>
+                            <td>Rs. {{getCurrentChange() | number : '1.2-2' }}</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        <br>
+        <button class="btn btn-info mr-2" (click)="generatePDF()">Print bill</button>
+        <button [disabled]="formStatus()" type="submit" class="btn btn-primary mr-2"
+            (click)="submitHandler()">{{ buttonValue }}</button>
+
+        <button type="reset" class="btn btn-info mr-2" (click)="resetTransactionFormFull()">Reset</button>
+    </div>
+</div>
+<!-- </div> -->
+
+<br>
+<br>
+<hr>
+
+<div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+    <table #transactionTable class="display table table-hover table-bordered borderless" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Total</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let transaction of transactions; let i =index;">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.created_at}}</td>
+                <td>{{ transaction.total }}</td>
+               
+            </tr>
+        </tbody>
+    </table>
+</div>

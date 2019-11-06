@@ -1,0 +1,120 @@
+<h1 class="d-inline-block">Suppliers</h1>
+<hr>
+<div>
+    <div class="container-fluid">
+        <form (ngSubmit)="onSubmit()" #f="ngForm" class="supplierForm formNeedsBackground">
+            <div class="form-group">
+                <label for="supplier">Supplier Name</label>
+                <input type="text" name="supplier" class="form-control" ngModel id="supplier" #supplier="ngModel"
+                    [ngClass]="{'is-invalid': supplier.invalid  && (supplier.dirty || supplier.touched) }" required>
+                <span class="invalid-feedback">
+                    <span *ngIf="supplierForm.hasError('required','supplier')">
+                        Supplier name is required.
+                    </span>
+                </span>
+            </div>
+
+            <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Address</label>
+            <div class="row">
+                <div class="col">
+
+                    <label for="code">Postel Code</label>
+                    <input type="text" name="code" id="code" class="form-control" ngModel required #code="ngModel"
+                        [ngClass]="{'is-invalid': code.invalid  && (code.dirty || code.touched) }">
+
+                    <span class="invalid-feedback">
+                        <span *ngIf="supplierForm.hasError('required','code')">
+                            Postel Code is required.
+                        </span>
+                    </span>
+                </div>
+                <div class="col">
+                    <label for="street">Street</label>
+                    <input type="text" name="street" id="street" class="form-control" ngModel required #street="ngModel"
+                        [ngClass]="{'is-invalid': street.invalid  && (street.dirty || street.touched) }">
+
+                    <span class="invalid-feedback">
+                        <span *ngIf="supplierForm.hasError('required','street')">
+                            Street name is required.
+                        </span>
+                    </span>
+                </div>
+                <div class="col">
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" class="form-control" ngModel required #city="ngModel"
+                        [ngClass]="{'is-invalid': city.invalid  && (city.dirty || city.touched) }">
+
+                    <span class="invalid-feedback">
+                        <span *ngIf="supplierForm.hasError('required','city')">
+                            City name is required.
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col">
+                    <label for="supplierPerson">Contact Person</label>
+                    <input type="text" name="supplierPerson" id="supplierPerson" class="form-control" ngModel required
+                        #supplierPerson="ngModel"
+                        [ngClass]="{'is-invalid': supplierPerson.invalid  && (supplierPerson.dirty || supplierPerson.touched) }">
+                    <span class="invalid-feedback">
+                        <span *ngIf="supplierForm.hasError('required','supplierPerson')">
+                            Agent name is required.
+                        </span>
+                    </span>
+                </div>
+                <div class="col">
+                    <label for="supplierContact">Contact No.</label>
+                    <input type="text" name="supplierContact" id="supplierContact" class="form-control" ngModel
+                        #supplierContact="ngModel" required
+                        [ngClass]="{'is-invalid': supplierContact.invalid  && (supplierContact.dirty || supplierContact.touched) }">
+                    <span class="invalid-feedback">
+                        <span *ngIf="supplierForm.hasError('required','supplierContact')">
+                            Supplier Contact is required.
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonValue }}</button>
+            <button type="reset" class="btn btn-info mr-2" (click)="resetSupplierForm()">Reset</button>
+        </form>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+            <table #suppliersTable class="display table table-hover table-bordered borderless" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Agent name</th>
+                        <th>Contact</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let supplier of suppliers; let i =index;">
+                        <td>{{i + 1}}</td>
+                        <td>{{supplier.supplier}}</td>
+                        <td>{{supplier.supplier_person}}</td>
+                        <td>{{supplier.contact}}</td>
+
+                        <td>
+                            <button type="button" class="btn btn-primary mr-2" (click)="updateSupplier(supplier.id)"><i
+                                    class="far fa-edit"></i></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger mr-2" (click)="deleteSupplier(supplier)"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<h1 class="d-inline-block">Users</h1>
+<hr>
+<div>
+  <div class="container-fluid">
+    <form (ngSubmit)="onSubmit()" #f="ngForm" class="userForm formNeedsBackground">
+      <div class="row">
+        <div class="col">
+          <label for="user">User Name</label>
+          <input type="text" name="user" class="form-control" ngModel id="user" #user="ngModel"
+            [ngClass]="{'is-invalid': user.invalid  && (user.dirty || user.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','user')">
+              User name is required.
+            </span>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="contact">Contact No.</label>
+          <input type="text" name="contact" id="contact" class="form-control" #contact="ngModel"
+            [ngClass]="{'is-invalid': contact.invalid  && (contact.dirty || contact.touched) }" ngModel required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','contact')">
+              Contact number is required.
+            </span>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="role">Role</label>
+          <select class="form-control" id="role" ngModel name="role" #role="ngModel" required>
+            <option [ngValue]="role.name" [ngClass]="{'is-invalid': role.invalid  && (role.dirty || role.touched)}"
+              *ngFor="let role of roles">{{role.name}}</option>
+          </select>
+
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','role')">
+              User role is required.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <br>
+
+      <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Address</label>
+      <div class="row">
+        <div class="col">
+          <label for="code">Postal Code</label>
+          <input type="text" name="code" id="code" class="form-control" ngModel #code="ngModel"
+            [ngClass]="{'is-invalid': code.invalid  && (code.dirty || code.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','code')">
+              Postal Code is required.
+            </span>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="street">Street</label>
+          <input type="text" name="street" id="street" class="form-control" ngModel #street="ngModel"
+            [ngClass]="{'is-invalid': street.invalid  && (street.dirty || street.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','street')">
+              Street name is required.
+            </span>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="city">City</label>
+          <input type="text" name="city" id="city" class="form-control" ngModel #city="ngModel"
+            [ngClass]="{'is-invalid': city.invalid  && (city.dirty || city.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','city')">
+              City is required.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <br>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="email">Email address</label>
+          <input type="text" class="form-control" name="email" ngModel id="email" #email="ngModel"
+            [ngClass]="{'is-invalid': email.invalid  && (email.dirty || email.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.hasError('required','email')">
+              Email address is required.
+            </span>
+          </span>
+        </div>
+        <!-- <div class="col">
+          <label for="password">Password</label>
+          <input type="password" name="password" ngModel id="password" class="form-control" required>
+          </div> -->
+      </div>
+
+      <div class="form-group"></div>
+      <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonValue }}</button>
+      <button type="reset" class="btn btn-info mr-2" (click)="resetUserForm()">Reset</button>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+      <table #usersTable class="display table table-hover table-bordered borderless" style="width:100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User Name</th>
+            <th>User Contact</th>
+            <th>User Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <!-- <th>Reset</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i =index;">
+            <td>{{i + 1}}</td>
+            <td>{{user.Name}}</td>
+            <td>{{user.contact}}</td>
+            <td>{{user.email}}</td>
+
+            <td>
+              <button type="button" class="btn btn-primary mr-2" (click)="updateUser(user.id)"><i
+                  class="far fa-edit"></i></button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger mr-2" (click)="deleteUser(user)"><i
+                  class="fas fa-trash-alt"></i></button>
+            </td>
+            <!-- <td>
+              <button *ngIf="getCurrentLoginUserId() != user.id" type="button" class="btn btn-danger mr-2" (click)="resetUserPassword(user.id)"><i
+                  class="fas fa-retweet"></i></button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

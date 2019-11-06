@@ -1,0 +1,56 @@
+<h1 class="d-inline-block">Category</h1>
+<hr>
+<div class="container-fluid">
+  <form (ngSubmit)="onSubmit()" #f="ngForm" class="categoryForm formNeedsBackground" novalidate>
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" ngModel id="categoryName" name="categoryName" required
+          #categoryName="ngModel"
+          [ngClass]="{'is-invalid': categoryName.invalid  && (categoryName.dirty || categoryName.touched) }">
+        <span class="invalid-feedback">
+          <span *ngIf="categoryForm.hasError('required','categoryName')">
+            Category name is required.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row mt-3 ml-2">
+      <div class="col">
+        <div class="float-right">
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonvalue }}</button>
+          <button type="reset" class="btn btn-info mr-2" (click)="resetCategoryForm()">Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <br>
+  <hr>
+  <br>
+  <br>
+  <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+    <table #categoryTable class="display table table-hover table-bordered borderless" style="width:100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Category Name</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories; let i =index;">
+          <td>{{i + 1}}</td>
+          <td>{{category.name}}</td>
+          <td>
+            <button type="button" class="btn btn-primary mr-2" (click)="updateCategory(category.id)"><i
+                class="far fa-edit"></i></button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger mr-2" (click)="deleteCategory(category)"><i
+                class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

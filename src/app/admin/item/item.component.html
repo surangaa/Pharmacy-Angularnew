@@ -1,0 +1,142 @@
+<h1 class="d-inline-block">Items</h1>
+<hr>
+<div>
+  <div class="container-fluid">
+    <form (ngSubmit)="onSubmit()" #f="ngForm" class="itemForm formNeedsBackground">
+      <div class="row">
+        <div class="col">
+          <label for="item">Brand name</label>
+          <input type="text" class="form-control" ngModel id="item" name="item" #item="ngModel"
+            [ngClass]="{'is-invalid': item.invalid  && (item.dirty || item.touched) }" required>
+          <span class="invalid-feedback">
+            <span *ngIf="itemForm.hasError('required','item')">
+              Item name is required.
+            </span>
+          </span>
+        </div>
+        <div class="col">
+          <label for="genericName">Generic name:</label>
+          <ng-select bindLabel="Name" placeholder="Select Generic Name"  name="genericName" ngModel > 
+            <ng-option *ngFor="let generic of generics" [value]="generic.id">
+              {{generic.name}}
+            </ng-option>
+          </ng-select>
+          <span class="invalid-feedback">
+            <span *ngIf="itemForm.hasError('required','genericName')">
+              Generic name is required.
+            </span>
+          </span>
+        </div>
+        <div class="col">
+          <label for="categoryName">Category name:</label>
+          <ng-select bindLabel="Name" placeholder="Select Category" name="categoryName" ngModel>
+            <ng-option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </ng-option>
+          </ng-select>
+          <span class="invalid-feedback">
+            <span *ngIf="itemForm.hasError('required','categoryName')">
+              Category name is required.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="itemType">Item type:</label>
+          <select class="form-control" id="itemType" (ngModel)="types" name="itemType" required>
+            <option *ngFor="let ty of types" [ngValue]=ty.id ng-model="selected">{{ty.type}}</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="packType">Pack type:</label>
+          <select class="form-control" id="packType" ngModel name="packType" required>
+            <option [ngValue]="pack.id" *ngFor="let pack of packs">{{pack.name}}</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="packSize">Pack size</label>
+          <input type="text" class="form-control" id="packSize" ngModel name="packSize" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="supplierName">Supplier name:</label>
+          <select class="form-control" id="supplierName" ngModel name="supplierName" required>
+            <option [ngValue]="supplier.id" *ngFor="let supplier of suppliers">{{supplier.supplier}}</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="notifyAt">Notify at</label>
+          <input type="text" class="form-control" id="notifyAt" ngModel name="notifyAt" required>
+        </div>
+        <div class="col">
+          <label for="exampleInputFile">Image input</label>
+          <input #file type="file" accept='image/*' (change)="preview(file.files)" class="form-control-file"
+            id="exampleInputFile" aria-describedby="fileHelp" id="productImage" name="productImage" required>
+          <!-- <span *ngIf="itemForm.hasError('required','productImage')">
+            Image is required.
+          </span> -->
+          <img [src]="imgURL" height="200" *ngIf="imgURL" class="rounded mx-auto d-block mt-2">
+        </div>
+      </div>
+      <br>
+      <br>
+      <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonValue }}</button>
+      <button type="reset" class="btn btn-info mr-2" (click)="resetItemForm()">Reset</button>
+    </form>
+    <br>
+    <br>
+    <hr>
+
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+      <table #itemsTable class="display table table-hover table-bordered borderless" style="width:100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Brand Name</th>
+            <th>Supplier</th>
+            <th>Pack</th>
+            <th>Pack Size</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items; let i =index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.Name }}</td>
+            <td>{{ getSupplierName(item) }}</td>
+            <td>{{ getPacksize(item) }}</td>
+            <td> {{item.Pack_Size}} </td>
+            <td>
+              <button type="button" class="btn btn-primary mr-2" (click)="updateItem(item.id)"><i
+                  class="far fa-edit"></i></button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger mr-2" (click)="deleteItemConfirm(item)"><i
+                  class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" #itemDeleteModal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Are you sure want to Delete?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteItem()">Delete</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>

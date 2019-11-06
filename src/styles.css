@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@media print {
+  app-root > * { display: none; }
+  app-root app-print-layout { display: block; }
+}
+
+.formNeedsBackground {
+  border-radius: 10px;
+  padding: 25px;
+  background-color: rgb(245, 242, 242);
+}
+
+#toast-container > div {
+  opacity:1;
+}

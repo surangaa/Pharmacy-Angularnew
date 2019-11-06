@@ -1,0 +1,36 @@
+<h1 class="d-inline-block">Expiring drug Report</h1>
+<hr>
+<div class=""></div>
+
+<div id="contentToConvert" class="container" style="margin-top: 85px">
+  <div class="center">
+    <h1>Weerasiri Pharmacy</h1>
+    <h6>Expiring Drug details Report</h6>
+    <p>33/A,Kirillawala,Kadawatha T.P:0112345672</p>
+  </div>
+  <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+    <table #performanceTable class="display table table-hover table-bordered borderless" style="width:100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item name</th>
+          <th>Supplier Name</th>
+          <th>Batch ID</th>
+          <th>Expiring Date</th>
+          <!-- <th>Total Income</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expire of expires; let i =index;">
+          <td>{{ i + 1 }}</td>
+          <td>{{ expire.Name }}</td>
+          <td>{{ getSupplierName(expire.Supplier_Name) }}</td>
+          <td>{{expire.batchId}}</td>
+          <td>{{ expire.expiryDate }}</td>
+          <!-- <td>{{ transaction.grand_total }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<button class="btn btn-info mt-3 float-right" (click)="generatePDF()">Print Report</button>

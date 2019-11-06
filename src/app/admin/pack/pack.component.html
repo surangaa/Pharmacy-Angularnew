@@ -1,0 +1,58 @@
+<h1 class="d-inline-block">Pack</h1>
+<hr>
+<div>
+  <div class="container-fluid">
+    <form (ngSubmit)="onSubmit()" #f="ngForm" class="packForm formNeedsBackground">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" ngModel name="packSize" id="packSize" #packSize="ngModel" required
+            [ngClass]="{'is-invalid': packSize.invalid  && (packSize.dirty || packSize.touched) }">
+          <span class="invalid-feedback">
+            <span *ngIf="packForm.hasError('required','packSize')">
+              Pack type is required.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="row mt-3 ml-2">
+        <div class="col">
+          <div class="float-right">
+            <button type="submit" class="btn btn-primary mr-2" [disabled]="!f.valid">{{ buttonValue }}</button>
+            <button type="reset" class="btn btn-info mr-2" (click)="resetPackForm()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+      <table #packsTable class="display table table-hover table-bordered borderless" style="width:100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pack type</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pack of packs; let i =index;">
+            <td>{{i + 1}}</td>
+            <td>{{pack.name}}</td>
+            <td>
+              <button type="button" class="btn btn-primary mr-2" (click)="updatePack(pack.id)"><i
+                  class="far fa-edit"></i></button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger mr-2" (click)="deletePack(pack)"><i
+                  class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+<h1 class="d-inline-block">Purchases</h1>
+<hr>
+<div class="container-fluid">
+
+  <form [formGroup]="nestedForm" ngSubmit=onSubmit() class="purchaseForm formNeedsBackground">
+    <div class="row">
+      <input type="hidden" id="id" formControlName="id">
+
+      <div class="col form-group">
+        <label for="supplierInvoiceNo">Supplier Invoice No.</label>
+        <input type="text" formControlName="supplierInvoiceNo" id="supplierInvoiceNo" class="form-control">
+
+        <div *ngIf="supplierInvoiceNo.invalid && (supplierInvoiceNo.dirty || supplierInvoiceNo.touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="supplierInvoiceNo.errors">
+            Invoice Number is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col form-group">
+        <label for="supplier">Supplier</label>
+        <ng-select bindLabel="supplier" placeholder="Select Supplier" formControlName="supplier">
+          <ng-option *ngFor="let supplier of suppliers" [value]=supplier.id>{{ supplier.supplier }}</ng-option>
+        </ng-select>
+      </div>
+      <div *ngIf="supplier.invalid && (supplier.dirty || supplier.touched)" class="alert alert-danger">
+        <div *ngIf="supplier.errors">
+          Supplier Name is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="remarks">Remarks</label>
+      <textarea class="form-control" id="remarks" formControlName="remarks" rows="2"></textarea>
+    </div>
+    <div class="purchaseForm">
+      <h4>Items</h4>
+      <hr>
+      <button class="btn btn-success float-right" (click)="addSelectedItem()"><i
+          class="fas fa-plus-circle"></i></button>
+      <div formArrayName="selectedItems" class="pt-2">
+        <div *ngFor="let group of selectedItems.controls; let i = index;" [formGroupName]="i">
+          <div class="col-8">
+            <h5>Item {{ i+1 }}</h5>
+          </div>
+          <div class="row">
+            <div class="col">
+              <!-- <div formArrayName="selectedItems" *ngFor="let selectedItem of selectedItems.controls; let i=index"> -->
+
+              <label for="batchId">Batch ID</label>
+              <input type="text" class="form-control mt-2" formControlName="batchId" id="batchId"
+                [ngClass]="{'is-invalid': group.controls.batchId.invalid  && (group.controls.batchId.dirty || group.controls.batchId.touched) }">
+              <!-- <div *ngIf="group.controls.batchId.invalid  && (group.controls.batchId.dirty || group.controls.batchId.touched)" class="alert alert-danger"> -->
+              <!-- <div *ngIf="group.hasError('required','batchId')">
+                    BatchId is required.
+                  </div> -->
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','batchId')">
+                  Please enter the batch Id.
+                </span>
+              </span>
+
+            </div>
+            <div class="col">
+              <label for="itemId">Item</label>
+              <ng-select bindLabel="Name" placeholder="Select Item" formControlName="itemId">
+                <ng-option *ngFor="let item of items" [value]=item.id
+                  [ngClass]="{'is-invalid': group.controls.itemId.invalid  && (group.controls.itemId.dirty || group.controls.itemId.touched) }">
+                  {{ item.Name }}</ng-option>
+              </ng-select>
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','itemId')">
+                  Please enter the Item name.
+                </span>
+              </span>
+              <!-- <select 
+                id="searchTextResults"
+                class="form-control mt-2" 
+                id="itemId"
+                formControlName="itemId">
+                <option selected [ngValue]="null">Choose...</option>
+                <option 
+                  *ngFor="let item of items" 
+                    [value]=item.id>{{ item.Name }}</option>
+              </select> -->
+            </div>
+            <div class="col">
+              <label for="expiryDate">Expiry Date:</label>
+              <input type="date" formControlName="expiryDate" id="expiryDate" class="form-control mt-2"
+                [ngClass]="{'is-invalid': group.controls.expiryDate.invalid  && (group.controls.expiryDate.dirty || group.controls.expiryDate.touched) }">
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','expiryDate')">
+                  Please enter the Expiry Date.
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="quantity">Quantity</label>
+              <input formControlName="quantity" type="text" class="form-control mt-2" id="quantity"
+                [ngClass]="{'is-invalid': group.controls.quantity.invalid  && (group.controls.quantity.dirty || group.controls.quantity.touched) }">
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','quantity')">
+                  Please enter the Quantity.
+                </span>
+              </span>
+            </div>
+            <div class="col">
+              <label for="costPrice">Cost price</label>
+              <input formControlName="costPrice" type="text" class="form-control mt-2" id="costPrice" placeholder="Rs"
+                [ngClass]="{'is-invalid': group.controls.costPrice.invalid  && (group.controls.costPrice.dirty || group.controls.costPrice.touched) }">
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','costPrice')">
+                  Please enter the Cost price.
+                </span>
+              </span>
+            </div>
+            <div class="col">
+              <label for="retailPrice">Retail price</label>
+              <input formControlName="retailPrice" type="text" class="form-control mt-2" id="retailPrice"
+                placeholder="Rs"
+                [ngClass]="{'is-invalid': group.controls.retailPrice.invalid  && (group.controls.retailPrice.dirty || group.controls.retailPrice.touched) }">
+              <span class="invalid-feedback">
+                <span *ngIf="group.hasError('required','retailPrice')">
+                  Please enter the Retail price.
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label>Code</label>
+              <input formControlName="code" type="text" class="form-control mt-2" id="code">
+            </div>
+            <div class="col">
+                <label>Unit price</label>
+                <div class="alert alert-info" role="alert" *ngIf="getUnitPrice(i)">
+                  {{ getUnitPrice(i) | number : '1.2-2' }}
+                </div>
+              </div>
+            <div class="col">
+              <button class="btn btn-danger mt-3 float-right" (click)="removeSelectedItem(i)"><i
+                  class="fas fa-minus-circle"></i></button>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="float-right">
+        <h4>Total : {{ getTotalPrice() }}</h4>
+      </div>
+    </div>
+    <div class="form-group"></div>
+    <div class="form-group"></div>
+    <button type="submit" class="btn btn-primary mr-2" [disabled]="nestedForm.invalid"
+      (click)="submitHandler()">{{ buttonValue }}</button>
+    <button type="reset" class="btn btn-info mr-2" (click)="resetPurchaseForm()">Reset</button>
+  </form>
+</div>
+
+<br>
+<br>
+<hr>
+
+<div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+  <table #purchaseTable class="display table table-hover table-bordered borderless" style="width:100%">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Invoice No.</th>
+        <th>Supplier</th>
+        <!-- <th>Batch ID</th> -->
+        <!-- <th>Item</th>
+        <th>Quantity</th>  -->
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let purchase of purchases; let i =index;">
+        <td>{{ i + 1 }}</td>
+        <td>{{ purchase.created_at | date }}</td>
+        <td>{{ purchase.supplierInvoiceNo }}</td>
+        <td>{{ getSupplierName(purchase.supplier)}}</td>
+         <!-- <td>{{getBatchName(itemstock.batchId)}}</td> -->
+        <!-- <td>{{purchase.item}}</td>
+        <td>{{purchase.quantity}}</td>  -->
+        <td>
+          <button type="button" class="btn btn-primary mr-2" (click)="updateItem(purchase.id)"><i
+              class="far fa-edit"></i></button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger mr-2" (click)="deletePurchase(purchase)"><i
+              class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

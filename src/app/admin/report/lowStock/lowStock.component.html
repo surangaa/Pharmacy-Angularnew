@@ -1,0 +1,36 @@
+<h1 class="d-inline-block">Low stock of drug Report</h1>
+<!-- <div id="contentToConvert" class="container" style="margin-top: 85px"> -->
+<hr>
+
+<div id="contentToConvert" class="container" style="margin-top: 85px">
+  <div class="center">
+    <h1>Weerasiri Pharmacy</h1>
+    <h6>Stock Report</h6>
+    <p>33/A,Kirillawala,Kadawatha T.P:0112345672</p>
+  </div>
+  <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+    <table #performanceTable class="display table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item name</th>
+          <th>Supplier name</th>
+          <th>Quantity left</th>
+          <th> Expiry Date</th>
+          <!-- <th>Total Income</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lowstock of lowstocks; let i =index;">
+          <td>{{ i + 1 }}</td>
+          <td>{{ lowstock.Name }}</td>
+          <td>{{ lowstock.supplier}}</td>
+          <td>{{ lowstock.units_left }}</td>
+          <td>{{ lowstock.expiryDate }}</td>
+          <!-- <td>{{ lowstock.grand_total }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-info mt-3 float-right" (click)="generatePDF()">Print Report</button>
+</div>
